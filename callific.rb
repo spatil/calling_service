@@ -12,7 +12,7 @@ class Server
     config = YAML.load_file(config_file)[RAILS_ENV]
     
     phone_ring = Proc.new do |ext, phone, channel|
-      phone = "+919923681649"
+      phone = "+919923681649" if RAILS_ENV == :development
       params = { 
           number: phone,
           channel_id: channel.id 
@@ -20,7 +20,7 @@ class Server
       response = HTTParty.post("#{config[:application_url]}/calls/recording", 
         { 
           body: params.to_json, 
-          headers: { "X-Auth-Token" => "callific", "Content-Type" => "application/json" }
+          headers: { "X-Auth-Token" => config[:token], "Content-Type" => "application/json" }
         }
       )
       AriEvent.log("Call recording for #{phone}, message: #{response.body}")
