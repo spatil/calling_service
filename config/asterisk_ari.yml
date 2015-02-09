@@ -1,0 +1,18 @@
+:production:
+  :url: 'http://acemoney.in:8088/ari'
+  :user: 'josh'
+  :password: 'KMOlLQXkmRmsA'
+  :app: 'callific'
+  :dahdi_dial_params: 'g0'
+  :audio_format: 'wav'
+  :application_url: 'http://acemoney.callific.in'
+
+
+:development:
+  :url: 'http://192.168.1.100:8088/ari'
+  :user: 'josh'
+  :password: 'josh123'
+  :app: 'callific'
+  :dahdi_dial_params: 'g0'
+  :audio_format: 'wav'
+  :application_url: 'http://demo.localhost.com:3000'
