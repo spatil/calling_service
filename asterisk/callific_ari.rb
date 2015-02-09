@@ -31,7 +31,7 @@ class CallificAri
     })
 
     AriEvent.init(Ari.client, self.opts)
-    AriEvent.logger = Logger.new(config[:log_file] || STDOUT)
+    AriEvent.logger = Logger.new(File.expand_path(config[:log_file], __FILE__) || STDOUT)
   end
 
   def app_name
