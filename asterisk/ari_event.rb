@@ -54,7 +54,7 @@ class AriEvent
         AriEvent.log('****** OutGoing channel Hangup******')
         AriEvent.hangup(channels, bridge)
       end
-
+      
     end
 
     def respond_call(channel)
@@ -62,8 +62,8 @@ class AriEvent
 
       exec_callback(:ring, channel.caller.number, channel.dialplan.exten, channel)
 
-      #endpoint = "DAHDI/g0/#{channel.dialplan.exten[3..-1]}"
-      endpoint = "SIP/#{channel.dialplan.exten}"
+      endpoint = "DAHDI/g0/#{channel.dialplan.exten[3..-1]}"
+      #endpoint = "SIP/#{channel.dialplan.exten}"
 
       out_channel = client.channels.originate({
         endpoint: endpoint, 
