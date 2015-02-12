@@ -66,6 +66,7 @@ class AriEvent
       #endpoint = "SIP/#{channel.dialplan.exten}"
 
       out_channel = client.channels.originate({
+        callerId: channel.caller.number,
         endpoint: endpoint, 
         app: 'callific',
         appArgs: 'dialed'
@@ -77,6 +78,10 @@ class AriEvent
     def start_collecting_events
       client.on :websocket_open do
         AriEvent.log("Connected !")
+      end
+
+      client.on :websocket_close do
+        AriEvent.log("Closed !")
       end
 
       client.on :stasis_start do |e|
