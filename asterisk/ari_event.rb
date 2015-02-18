@@ -61,8 +61,10 @@ class AriEvent
       channel.ring
 
       exec_callback(:ring, channel.caller.number, channel.dialplan.exten, channel)
-
-      endpoint = "DAHDI/g0/#{channel.dialplan.exten[3..-1]}"
+      
+      number = "#{channel.dialplan.exten}"
+      number =  number[1..-1] unless number.match(/09|08|07/).nil?
+      endpoint = "DAHDI/g0/#{number}"
       #endpoint = "SIP/#{channel.dialplan.exten}"
 
       out_channel = client.channels.originate({
@@ -89,7 +91,7 @@ class AriEvent
 
         AriEvent.log("Channel #{in_channel.id} : Received call from #{in_channel.caller.number} to #{in_channel.dialplan.exten} !")
 
-        if in_channel.caller.number.present? and in_channel.dialplan.exten.present?
+        if in_channel.caller.number.present? and in_channel.dialplan.exten.present? and in_channel.dialplan.exten.to_s != "s"
           AriEvent.respond_call(in_channel)
         end
       end

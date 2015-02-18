@@ -12,7 +12,7 @@ class Server
     config = YAML.load_file(config_file)[RAILS_ENV]
     
     phone_ring = Proc.new do |ext, phone, channel|
-      phone = "+919923681649" if RAILS_ENV == :development
+      phone = "8793606955" if RAILS_ENV == :development
       params = { 
           number: phone,
           channel_id: channel.id 
