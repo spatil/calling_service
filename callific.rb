@@ -4,7 +4,7 @@ require 'logger'
 require 'httparty'
 require 'active_support/json'
 
-RAILS_ENV = :development
+RAILS_ENV = :production
 
 class Server
   def self.start
