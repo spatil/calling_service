@@ -63,7 +63,7 @@ class AriEvent
       exec_callback(:ring, channel.caller.number, channel.dialplan.exten, channel)
       
       number = "#{channel.dialplan.exten}"
-      number =  number[1..-1] unless number.match(/09|08|07/).nil?
+      number =  number[1..-1] unless number.match(/09|08|07[2-9]+/).nil?
       endpoint = "DAHDI/g0/#{number}"
       #endpoint = "SIP/#{channel.dialplan.exten}"
 
