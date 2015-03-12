@@ -33,6 +33,7 @@ class AriEvent
       channels = [out_channel, in_channel]
       channels.each do |channel|
         channel.on :stasis_end do |e|
+          AriEvent.exec_callback(:hangup, in_channel.caller.number, in_channel.dialplan.exten, in_channel) if channel == in_channel
           AriEvent.log("Channel #{e.channel.name} left Stasis.")
           AriEvent.hangup(channels, bridge)
         end

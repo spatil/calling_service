@@ -16,7 +16,8 @@ class Server
       phone = "8793606955" if rails_env == :development
       params = { 
           number: phone,
-          channel_id: channel.id 
+          channel_id: channel.id, 
+          call_state: 'start' 
       }
       response = HTTParty.post("#{config[:application_url]}/calls/recording", 
         { 
@@ -32,10 +33,27 @@ class Server
       #puts "Answer #{ext} -> #{phone} -> #{channel.id}"
     end
 
+    phone_hangup = Proc.new do |ext, phone, channel|
+      #puts "Hangup #{ext} -> #{phone} -> #{channel.id}"
+      params = { 
+          number: phone,
+          channel_id: channel.id, 
+          call_state: 'end' 
+      }
+      response = HTTParty.post("#{config[:application_url]}/calls/recording", 
+        { 
+          body: params.to_json, 
+          headers: { "X-Auth-Token" => config[:token], "Content-Type" => "application/json" }
+        }
+      )
+      AriEvent.log("Call recording for #{phone}, message: #{response.body}")
+    end
+
     @client = CallificAri.new(config_file,  rails_env, {
       callbacks: {
         ring: phone_ring,
-        answer: phone_answer
+        answer: phone_answer,
+        hangup: phone_hangup
       }
     }) 
 
