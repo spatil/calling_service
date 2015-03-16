@@ -18,7 +18,7 @@ class Server
           number: phone,
           channel_id: channel.id, 
           call_state: 'start', 
-          extension: ext.to_s.last(4)
+          extension: ext.to_s[-4..-1]
       }
       response = HTTParty.post("#{config[:application_url]}/calls/recording", 
         { 
@@ -40,7 +40,7 @@ class Server
           number: phone,
           channel_id: channel.id, 
           call_state: 'end', 
-          extension: ext.to_s.last(4)
+          extension: ext.to_s[-4..-1]
       }
       response = HTTParty.post("#{config[:application_url]}/calls/recording", 
         { 
